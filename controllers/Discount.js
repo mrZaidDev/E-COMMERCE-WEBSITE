@@ -7,17 +7,53 @@ export const CreateDiscount = async (req, res) => {
   }
   try {
     const createdDiscount = await DiscountModel.create(req.body);
-    return res.status(201).json({message:'Discount code created successfully',createdDiscount})
+    return res
+      .status(201)
+      .json({ message: "Discount code created successfully", createdDiscount });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
-export const AllDiscounts = async (req,res) => {
+export const AllDiscounts = async (req, res) => {
   try {
-    const allDiscounts = await DiscountModel.find({})
-    return res.status(200).json(allDiscounts)
+    const allDiscounts = await DiscountModel.find({});
+    return res.status(200).json(allDiscounts);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+
+export const UpdateDiscount = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(404).json({ message: "No id provided" });
+  }
+  try {
+    const updateDiscountCode = await DiscountModel.findByIdAndUpdate(
+      id,
+      req.body,
+      { new: true }
+    );
+    return res
+      .status(200)
+      .json({ message: "product updated successfully", updateDiscountCode });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const DeleteDiscount = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(404).json({ message: "No id provided" });
+  }
+  try {
+    const deleteDiscount = await DiscountModel.findByIdAndDelete(id);
+    return res
+      .status(200)
+      .json({ message: "product deleted successfully"});
+  } catch (error) {
+    console.log(error);
+  }
+};
