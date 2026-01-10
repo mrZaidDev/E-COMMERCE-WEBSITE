@@ -1,8 +1,8 @@
 import express from "express";
-import { CreateDiscount } from "../controllers/Discount";
-import { adminProtection, userProtection } from "../middlewares/authMiddleware";
+import { CreateDiscount } from "../controllers/Discount.js";
+import { adminProtection, userProtection } from "../middlewares/authMiddleware.js";
 const Router = express.Router();
 
-Router.post("create", userProtection, adminProtection, CreateDiscount);
+Router.post("/create", CreateDiscount);
 
 export default Router;

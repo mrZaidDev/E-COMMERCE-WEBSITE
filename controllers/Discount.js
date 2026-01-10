@@ -1,4 +1,4 @@
-import DiscountModel from "../models/Discount";
+import DiscountModel from "../models/Discount.js";
 
 export const CreateDiscount = async (req, res) => {
   const { code, discountType, value, minimumPurchase } = req.body;

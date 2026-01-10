@@ -26,6 +26,6 @@ const DiscountSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const DiscountModel = mongoose.model("Product", DiscountSchema);
+const DiscountModel = mongoose.model("Discount", DiscountSchema);
 
 export default DiscountModel;
