@@ -9,4 +9,5 @@ Router.put("/update/:id", UpdateDiscount);
 Router.delete("/delete/:id", DeleteDiscount);
 
 
+
 export default Router;

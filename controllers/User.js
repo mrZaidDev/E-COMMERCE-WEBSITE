@@ -50,7 +50,7 @@ export const LoginUser = async (req, res) => {
     if (!IsPasswordCorrect) {
       return res.status(404).json({ message: "Wrong Credentials" });
     }
-    const token = generateToken(createdUser._id);
+    const token = generateToken(userAlreadyExists._id);
     res.cookie("access_token", token, {
       httpOnly: true,
       secure: true,

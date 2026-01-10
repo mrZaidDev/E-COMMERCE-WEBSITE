@@ -10,7 +10,6 @@ export const userProtection = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const payload = decoded.payload
     const user = await UserModel.findById(payload)
-    console.log(user)
     req.user = user
     next();
   } catch (error) {
