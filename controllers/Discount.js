@@ -12,3 +12,12 @@ export const CreateDiscount = async (req, res) => {
     console.log(error)
   }
 };
+
+export const AllDiscounts = async (req,res) => {
+  try {
+    const allDiscounts = await DiscountModel.find({})
+    return res.status(200).json(allDiscounts)
+  } catch (error) {
+    console.log(error)
+  }
+}
