@@ -11,6 +11,7 @@ import OrderRoutes from './routes/Order.js'
 import ProductRoutes from "./routes/Product.js";
 import UserRoutes from "./routes/User.js";
 import DiscountRoutes from './routes/Discount.js'
+import AdminRoutes from './routes/Admin.js'
 
 // Load environment variables
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/api/products", ProductRoutes);
 app.use("/api/users", UserRoutes);
 app.use("/api/discount", DiscountRoutes);
 app.use("/api/orders", OrderRoutes);
+app.use("/api/admin", AdminRoutes);
 
 // Server
 const PORT = process.env.PORT || 5000;
