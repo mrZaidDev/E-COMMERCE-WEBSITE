@@ -20,7 +20,7 @@ dotenv.config();
 const app = express();
 
 // Connect to database
-connectDB();
+
 
 // Middlewares
 app.use(
@@ -46,6 +46,7 @@ app.use("/api/admin", AdminRoutes);
 // Server
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await connectDB();
   console.log(`Server running on port ${PORT} ✅`);
 });
