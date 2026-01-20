@@ -11,19 +11,21 @@ const DiscountSchema = new mongoose.Schema(
     },
     value: {
       type: Number,
-      required: true,
+      required: function () {
+        return ["PERCENT", "FLAT"].includes(this.discountType);
+      },
     },
     minimumPurchase: {
       type: Number,
       required: true,
     },
-    active:{
-        type:Boolean,
-        required:true,
-        default:true
-    }
+    active: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const DiscountModel = mongoose.model("Discount", DiscountSchema);

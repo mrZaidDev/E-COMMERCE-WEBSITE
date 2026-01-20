@@ -9,7 +9,7 @@ export const createProduct = async (req, res) => {
     const productCreated = await ProductModel.create(req.body);
     return res
       .status(201)
-      .json({ message: "product created successfully", productCreated });
+      .json({ product:productCreated });
   } catch (error) {
     console.log(error);
     // return res.status(500).json({ message: error.message });
@@ -30,7 +30,7 @@ export const getSingleProduct = async (req, res) => {
   const id = req.params.id;
   try {
     const findSingleProduct = await ProductModel.findById(id);
-    return res.status(200).json({ findSingleProduct });
+    return res.status(200).json({ product:findSingleProduct });
   } catch (error) {
     console.log(error);
     // return res.status(500).json({ message: error.message });

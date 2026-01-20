@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
 const OrderItemSchema = new mongoose.Schema({
-  productId: {
+  _id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
     required: true,
   },
-  productName: {
+  name: {
     type: String,
     required: true,
   },
@@ -27,12 +27,13 @@ const OrderSchema = new mongoose.Schema({
   },
   orderItems: [OrderItemSchema],
   subtotal: { type: Number },
-  discount: String,
+  discount: Number,
   total: { type: Number },
   paymentMethod: {
     type: String,
     enum: ["online", "cash on delivery"],
     required: true,
+    default:'cash on delivery'
   },
   paymentStatus: {
     type: String,

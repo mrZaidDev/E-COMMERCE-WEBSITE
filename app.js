@@ -7,11 +7,11 @@ import cookieParser from "cookie-parser";
 // Custom imports
 import connectDB from "./config/DBConfig.js";
 // import errorHandler from "./middlewares/errorHandler.js";
-import OrderRoutes from './routes/Order.js'
+import OrderRoutes from "./routes/Order.js";
 import ProductRoutes from "./routes/Product.js";
 import UserRoutes from "./routes/User.js";
-import DiscountRoutes from './routes/Discount.js'
-import AdminRoutes from './routes/Admin.js'
+import DiscountRoutes from "./routes/Discount.js";
+import AdminRoutes from "./routes/Admin.js";
 
 // Load environment variables
 dotenv.config();
@@ -23,11 +23,20 @@ const app = express();
 connectDB();
 
 // Middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Routes
+
+app.use("/api/hello", (req, res) => {
+  return res.status(200).json({ message: "hello bro" });
+});
 app.use("/api/products", ProductRoutes);
 app.use("/api/users", UserRoutes);
 app.use("/api/discount", DiscountRoutes);

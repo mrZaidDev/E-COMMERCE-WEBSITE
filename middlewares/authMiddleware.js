@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import UserModel from "../models/User.js";
 
 export const userProtection = async (req, res, next) => {
+  console.log(req.cookies.access_token)
   const token = req.cookies.access_token;
   if (!token) {
     return res.status(403).json({ message: "no token provided" });

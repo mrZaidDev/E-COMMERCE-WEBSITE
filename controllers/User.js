@@ -20,9 +20,8 @@ export const RegisterUser = async (req, res) => {
       password: hashPassword,
     });
     const token = generateToken(createdUser._id);
+    console.log(token);
     res.cookie("access_token", token, {
-      httpOnly: true,
-      secure: true,
       maxAge: 1000 * 60 * 15,
     });
     return res
@@ -52,13 +51,16 @@ export const LoginUser = async (req, res) => {
     }
     const token = generateToken(userAlreadyExists._id);
     res.cookie("access_token", token, {
-      httpOnly: true,
-      secure: true,
       maxAge: 1000 * 60 * 15,
     });
-    return res.status(200).json({ message: "User logged in successfully" });
+    return res
+      .status(200)
+      .json({
+        message: "User logged in successfully",
+        user: userAlreadyExists,
+      });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -69,6 +71,14 @@ export const UserProfile = async (req, res) => {
     return res.status(200).json({ getUser });
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const AuthVerify = (req, res) => {
+  try {
+    return res.status(200).json({ message: "user verified", user: req.user });
+  } catch (error) {
+    res.status(500).json({ message: "user not verified" });
   }
 };
 
