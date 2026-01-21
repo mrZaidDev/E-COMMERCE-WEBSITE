@@ -11,7 +11,7 @@ export const CreateDiscount = async (req, res) => {
       .status(201)
       .json({ message: "Discount code created successfully", createdDiscount });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -20,7 +20,7 @@ export const AllDiscounts = async (req, res) => {
     const allDiscounts = await DiscountModel.find({});
     return res.status(200).json(allDiscounts);
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -37,9 +37,9 @@ export const UpdateDiscount = async (req, res) => {
     );
     return res
       .status(200)
-      .json({ message: "product updated successfully", updateDiscountCode });
+      .json({ message: "discount updated successfully", updateDiscountCode });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -49,22 +49,22 @@ export const DeleteDiscount = async (req, res) => {
     return res.status(404).json({ message: "No id provided" });
   }
   try {
-    const deleteDiscount = await DiscountModel.findByIdAndDelete(id);
-    return res.status(200).json({ message: "Discount deleted successfully" });
+     await DiscountModel.findByIdAndDelete(id);
+    return res.status(200).json({ message: "discount deleted successfully" });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
 export const GetSingleDiscount = async (req, res) => {
-  const {id} = req.params
-    if (!id) {
+  const { id } = req.params;
+  if (!id) {
     return res.status(404).json({ message: "No id provided" });
   }
   try {
     const getDiscount = await DiscountModel.findById(id);
-    return res.status(200).json({ discount:getDiscount });
+    return res.status(200).json({ discount: getDiscount });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };

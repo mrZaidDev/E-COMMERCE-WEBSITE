@@ -33,7 +33,8 @@ export const CreateOrder = async (req, res) => {
       .status(201)
       .json({ message: "Order Created Successfully", createOrder });
   } catch (error) {
-    console.log(error);
+        return res.status(500).json({message:"error occurred"})
+
   }
 };
 
@@ -43,7 +44,8 @@ export const GetOrderById = async (req, res) => {
     const order = await OrderModel.findById(id);
     return res.status(200).json(order);
   } catch (error) {
-    console.log(error);
+        return res.status(500).json({message:"error occurred"})
+
   }
 };
 
@@ -55,6 +57,7 @@ export const GetUserOrders = async (req, res) => {
     console.log(orders)
     return res.status(200).json({orders})
   } catch (error) {
-    console.log(error)
+       return res.status(500).json({message:"error occurred"})
+
   }
 };

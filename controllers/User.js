@@ -5,12 +5,12 @@ import generateToken from "../utils/GenerateToken.js";
 export const RegisterUser = async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
-    return res.status(404).json({ message: "All fields are required" });
+    return res.status(400).json({ message: "All fields are required" });
   }
   try {
     const userAlreadyExists = await UserModel.findOne({ email });
     if (userAlreadyExists) {
-      return res.status(404).json({ message: "User already exists" });
+      return res.status(409).json({ message: "User already exists" });
     }
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -19,16 +19,21 @@ export const RegisterUser = async (req, res) => {
       email,
       password: hashPassword,
     });
+
     const token = generateToken(createdUser._id);
-    console.log(token);
     res.cookie("access_token", token, {
       maxAge: 1000 * 60 * 15,
     });
-    return res
-      .status(200)
-      .json({ message: "User Created Successfully", createdUser });
+    return res.status(201).json({
+      message: "User Register Successfully",
+      user: {
+        id: createdUser._id,
+        name: createdUser.name,
+        email: createdUser.email,
+      },
+    });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -44,7 +49,7 @@ export const LoginUser = async (req, res) => {
     }
     const IsPasswordCorrect = await bcrypt.compare(
       password,
-      userAlreadyExists.password
+      userAlreadyExists.password,
     );
     if (!IsPasswordCorrect) {
       return res.status(404).json({ message: "Wrong Credentials" });
@@ -53,14 +58,12 @@ export const LoginUser = async (req, res) => {
     res.cookie("access_token", token, {
       maxAge: 1000 * 60 * 15,
     });
-    return res
-      .status(200)
-      .json({
-        message: "User logged in successfully",
-        user: userAlreadyExists,
-      });
+    return res.status(200).json({
+      message: "User logged in successfully",
+      user: userAlreadyExists,
+    });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -70,7 +73,7 @@ export const UserProfile = async (req, res) => {
     const getUser = await UserModel.findById(userId);
     return res.status(200).json({ getUser });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -81,4 +84,3 @@ export const AuthVerify = (req, res) => {
     res.status(500).json({ message: "user not verified" });
   }
 };
-

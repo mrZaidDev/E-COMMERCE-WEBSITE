@@ -7,7 +7,7 @@ export const getAllUsers = async (req, res) => {
     const allUsers = await UserModel.find({});
     return res.status(200).json({ allUsers });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -16,7 +16,7 @@ export const GetSingleUser = async (req, res) => {
     const user = await UserModel.findById(req.params.id);
     return res.status(200).json(user);
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -25,9 +25,9 @@ export const UpdateUser = async (req, res) => {
     const user = await UserModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    return res.status(200).json(user);
+    return res.status(200).json({ message: "user updated successfully" });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
@@ -36,38 +36,38 @@ export const DeleteUser = async (req, res) => {
     await UserModel.findByIdAndDelete(req.params.id);
     return res.status(200).json({ message: "User Deleted Successfully" });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
 export const GetAllOrders = async (req, res) => {
   try {
-    const allOrders = await OrderModel.find({}).populate('user')
+    const allOrders = await OrderModel.find({}).populate("user");
     return res.status(200).json({ allOrders });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
-export const GetSingleOrder = async (req,res) => {
-    try {
-    const order = await OrderModel.findById(req.params.id).populate('user');
+export const GetSingleOrder = async (req, res) => {
+  try {
+    const order = await OrderModel.findById(req.params.id).populate("user");
     return res.status(200).json(order);
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
-}
+};
 
-export const UpdateOrder = async (req,res) => {
-    try {
+export const UpdateOrder = async (req, res) => {
+  try {
     const order = await OrderModel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    return res.status(200).json({order});
+    return res.status(200).json({ order, message:"order updated successfully" });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
-}
+};
 
 export const DeleteProduct = async (req, res) => {
   const { id } = req.params;
@@ -75,7 +75,7 @@ export const DeleteProduct = async (req, res) => {
     await ProductModel.findByIdAndDelete(id);
     return res.status(200).json({ message: "product deleted successfully" });
   } catch (error) {
-    console.log(error);
+    return res.status(500).json({ message: "error occurred" });
   }
 };
 
